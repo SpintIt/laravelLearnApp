@@ -20,7 +20,7 @@ class RegisterController extends Controller
     {
 
         $user = User::query()->create($request->validated());
-        Auth::login($user);
+        // Auth::login($user);
 
         return redirect()->route('admin.dashboards');
     }

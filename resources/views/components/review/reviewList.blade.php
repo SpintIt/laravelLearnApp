@@ -4,5 +4,14 @@
         <button id="open-review-modal" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">{{ __('Написать отзыв') }}</button>
     </div>
 
-    <x-review.item name="Иван Петров" description='"Отличный товар, полностью соответствует описанию. Быстрая доставка и хорошее качество!"' />
+    @if($reviews->total())
+        @foreach($reviews as $review)
+            <x-review.item :review="$review" />
+        @endforeach
+
+        {{ $reviews->links() }}
+    @else
+        {{ __('Нет отзывов') }}
+    @endif
+
 </div>

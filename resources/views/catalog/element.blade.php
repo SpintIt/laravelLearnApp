@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <x-review.list />
+    <x-review.reviewList productId="1111" />
 
     <x-modal :title="__('Оставить отзыв')">
 

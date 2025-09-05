@@ -9,7 +9,7 @@
 <script>
 export default {
   mounted() {
-    let google = window.google;
+   /* let google = window.google;
     let map = document.getElementById("map-canvas");
     let lat = map.getAttribute("data-lat");
     let lng = map.getAttribute("data-lng");
@@ -83,7 +83,7 @@ export default {
 
     google.maps.event.addListener(marker, "click", function () {
       infowindow.open(map, marker);
-    });
+    });*/
   },
 };
 </script>
