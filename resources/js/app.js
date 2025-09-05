@@ -24,8 +24,8 @@ import App from "@/App.vue";
 
 // layouts
 
-import Admin from "@/layouts/Admin.vue";
-import Auth from "@/layouts/Auth.vue";
+import Admin from "./layouts/Admin.vue";
+import Auth from "./layouts/Auth.vue";
 
 // views for Admin layout
 
@@ -44,6 +44,7 @@ import Register from "@/views/auth/Register.vue";
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
 import Index from "@/views/Index.vue";
+import Catalog from "./views/admin/Catalog.vue";
 
 // routes
 
@@ -52,6 +53,10 @@ const routes = [
         path: "/admin",
         component: Admin,
         children: [
+            {
+                path: "catalog",
+                component: Catalog,
+            },
             {
                 path: "dashboard",
                 component: Dashboard,
