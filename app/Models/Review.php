@@ -22,12 +22,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Review extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'name',
         'description',
         'user_id',
+        'product_id',
         'published_at',
     ];
 

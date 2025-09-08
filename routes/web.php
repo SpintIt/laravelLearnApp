@@ -11,7 +11,7 @@ use App\Http\Controllers\Catalog\CatalogController;
 use App\Http\Controllers\Landing\LandingController;
 use App\Http\Controllers\MainPage\MainPageController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
-use App\Http\Controllers\Catalog\CatalogElementController;
+use App\Http\Controllers\Catalog\ElementController;
 
 Route::get('/', [MainPageController::class, 'index'])->name('index');
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
@@ -19,7 +19,7 @@ Route::get('/landing', [LandingController::class, 'index'])->name('landing');
 
 Route::prefix('catalog')->name('catalog.')->group(function () {
     Route::get('/', [CatalogController::class, 'index'])->name('index');
-    Route::get('/{code}', [CatalogElementController::class, 'index'])->name('page');
+    Route::get('/{code}', [ElementController::class, 'index'])->name('page');
 });
 
 

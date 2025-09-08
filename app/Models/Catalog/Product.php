@@ -2,9 +2,31 @@
 
 namespace App\Models\Catalog;
 
+use App\Models\Dictionary\Color;
+use App\Models\Dictionary\Size;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    //
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function colors(): BelongsToMany
+    {
+        return $this->belongsToMany(Color::class, 'offers', 'product_id', 'color_id')->distinct();
+    }
+
+    public function sizes(): BelongsToMany
+    {
+        return $this->belongsToMany(Size::class, 'offers', 'product_id', 'size_id')->distinct();
+    }
 }

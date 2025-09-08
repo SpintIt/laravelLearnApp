@@ -25,6 +25,7 @@ class ReviewStoreRequest extends FormRequest
             'name' => ['required', 'string', 'max:100'],
             'description' => ['required', 'string', 'max:1000'],
             'user_id' => ['required', 'integer', 'exists:users,id'],
+            'product_id' => ['required', 'integer', 'exists:products,id'],
             // 'user_id' => ['required', 'integer:', Rule::exists('users', 'id')->where('active', true)],
         ];
     }
