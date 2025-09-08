@@ -14,7 +14,7 @@
             </button>
         </div>
 
-        {{ $errors->first()  }}
+        {{ $errors->first() }}
 
         {{ $slot }}
 

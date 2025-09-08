@@ -5,7 +5,7 @@
         <div
           class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0"
         >
-          <div class="rounded-t mb-0 px-6 py-6">
+          <!-- <div class="rounded-t mb-0 px-6 py-6">
             <div class="text-center mb-3">
               <h6 class="text-blueGray-500 text-sm font-bold">
                 Sign in with
@@ -28,21 +28,23 @@
               </button>
             </div>
             <hr class="mt-6 border-b-1 border-blueGray-300" />
-          </div>
+          </div> -->
           <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-            <div class="text-blueGray-400 text-center mb-3 font-bold">
+            <div class="text-blueGray-400 text-center my-3 font-bold">
               <small>Or sign in with credentials</small>
             </div>
-            <form>
+            <form  @submit.prevent="submitForm">
               <div class="relative w-full mb-3">
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
+                  for="email"
                 >
                   Email
                 </label>
                 <input
                   type="email"
+                  name="email"
+                  v-model="form.email"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Email"
                 />
@@ -51,12 +53,14 @@
               <div class="relative w-full mb-3">
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  htmlFor="grid-password"
+                  for="password"
                 >
                   Password
                 </label>
                 <input
                   type="password"
+                  name="password"
+                  v-model="form.password"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                   placeholder="Password"
                 />
@@ -66,6 +70,8 @@
                   <input
                     id="customCheckLogin"
                     type="checkbox"
+                    name="remember"
+                    v-model="form.remember"
                     class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
                   />
                   <span class="ml-2 text-sm font-semibold text-blueGray-600">
@@ -77,7 +83,7 @@
               <div class="text-center mt-6">
                 <button
                   class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                  type="button"
+                  type="submit"
                 >
                   Sign In
                 </button>
@@ -104,13 +110,33 @@
 <script>
 import github from "@/assets/img/github.svg";
 import google from "@/assets/img/google.svg";
+import axios from "axios";
 
 export default {
   data() {
     return {
       github,
       google,
+      form: {
+            name: '',
+            password: '',
+            remember: false
+        }
     };
   },
+  methods: {
+        submitForm() {
+            console.log(this.form);
+            // Здесь будет логика отправки формы
+            // Например, с помощью Axios
+            axios.post('/auth/login', this.form)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }
 };
 </script>

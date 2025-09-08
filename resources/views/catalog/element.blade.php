@@ -34,9 +34,11 @@
 
     <x-review.reviewList productId="1111" />
 
-    <x-modal :title="__('Оставить отзыв')">
+    @auth
+        <x-modal :title="__('Оставить отзыв')">
 
-        <x-review.form :action="route('review.store')" />
+            <x-review.form :action="route('review.store')" />
 
-    </x-modal>
+        </x-modal>
+    @endauth
 @endsection

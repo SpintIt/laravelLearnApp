@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 
-
 import axios from 'axios';
 window.axios = axios;
 
@@ -56,6 +55,7 @@ const routes = [
             {
                 path: "catalog",
                 component: Catalog,
+                meta: { hideHeaderStats: true },
             },
             {
                 path: "dashboard",
@@ -107,8 +107,8 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 });
 
 
