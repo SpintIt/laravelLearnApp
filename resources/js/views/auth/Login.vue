@@ -125,17 +125,28 @@ export default {
     };
   },
   methods: {
-        submitForm() {
-            console.log(this.form);
-            // Здесь будет логика отправки формы
-            // Например, с помощью Axios
-            axios.post('/auth/login', this.form)
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        async submitForm() {
+            try {
+                const response = await axios.post('/auth/login', this.form);
+                const { user, token, status } = response.data;
+
+                if (status === 'ok')
+                {
+                    localStorage.setItem('authToken', token);
+                    console.log('Авторизация прошла успешно! Токен сохранён.', user);
+                    window.location.href  = '/admin';
+                }
+                else
+                {
+                    console.error('Что-то пошло не так!');
+                }
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    console.error('Ошибка авторизации:', error.response.data.errors);
+                } else {
+                    console.error('Произошла непредвиденная ошибка:', error);
+                }
+            }
         }
     }
 };

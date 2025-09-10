@@ -59,13 +59,23 @@ export default {
             }
         },
         async logout() {
-            await axios.post('/admin/logout', this.form)
-                .then(response => {
-                    window.location.href = '/';
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            try {
+                await axios.post('/admin/logout');
+                const { status } = response.data;
+
+                if (status === 'ok')
+                    console.log('Выход выполнен успешно.');
+                else
+                    console.error('Что-то пошло не так!');
+            } catch (error) {
+                if (error.response && error.response.data)
+                    console.error('Ошибка авторизации:', error.response.data.errors);
+                else
+                    console.error('Произошла непредвиденная ошибка:', error);
+            } finally {
+                localStorage.removeItem('authToken');
+                window.location.href = '/';
+            }
         }
     },
 };

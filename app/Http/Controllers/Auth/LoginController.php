@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Resources\UserResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
-use Illuminate\Http\RedirectResponse;
 use \App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Validation\ValidationException;
@@ -28,16 +29,30 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended('admin.dashboards');
+        $user = Auth::user();
+        $token = $user->createToken('auth-token')->plainTextToken;
+
+        return response()->json([
+            'user' => new UserResource($user),
+            'token' => $token,
+            'status' => 'ok',
+        ]);
     }
 
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request): JsonResponse
     {
-        Auth::logout();
+        $user = $request->user('sanctum');
 
+        if ($user) {
+            $user->tokens()->delete();
+        }
+
+        Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('index');
+        return response()->json([
+            'status' => 'ok',
+        ]);
     }
 }

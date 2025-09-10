@@ -12,6 +12,12 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-token');
 }
 
+const authToken = localStorage.getItem('authToken');
+if (authToken)
+{
+    window.axios.defaults.headers.common['Authorization'] = `Bearer ${authToken}`;
+}
+
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";

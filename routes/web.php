@@ -23,7 +23,7 @@ Route::prefix('catalog')->name('catalog.')->group(function () {
 });
 
 
-Route::middleware(['log', 'auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['log', 'auth:sanctum', 'auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::get('/catalog', [AdminController::class, 'index'])->name('catalog');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboards');

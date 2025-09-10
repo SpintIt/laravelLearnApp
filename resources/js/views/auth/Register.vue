@@ -141,7 +141,7 @@ export default {
         return {
             github,
             google,
-            form: { // Добавьте объект для данных формы
+            form: {
                 name: '',
                 email: '',
                 password: '',
@@ -151,17 +151,29 @@ export default {
         };
     },
     methods: {
-        submitForm() {
-            console.log(this.form);
-            // Здесь будет логика отправки формы
-            // Например, с помощью Axios
-            axios.post('/auth/register', this.form)
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        async submitForm() {
+            try {
+                const response = await axios.post('/auth/register', this.form);
+                const { user, token, status } = response.data;
+
+                if (status === 'ok')
+                {
+                    localStorage.setItem('authToken', token);
+                    console.log('Регистрация прошла успешно! Токен сохранён.', user);
+                    window.location.href  = '/admin';
+                }
+                else
+                {
+                    console.error('Что-то пошло не так!');
+                }
+
+            } catch (error) {
+                if (error.response && error.response.data) {
+                    console.error('Ошибка регистрации:', error.response.data.errors);
+                } else {
+                    console.error('Произошла непредвиденная ошибка:', error);
+                }
+            }
         }
     }
 };
