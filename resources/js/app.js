@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import i18n from "./lang/i18n.js";
 import { createWebHistory, createRouter } from "vue-router";
 
 import axios from 'axios';
@@ -118,4 +119,4 @@ const router = createRouter({
 });
 
 
-createApp(App).use(router).mount("#app");
+createApp(App).use(router).use(i18n).mount("#app");

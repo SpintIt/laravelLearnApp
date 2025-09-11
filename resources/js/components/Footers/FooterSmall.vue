@@ -19,7 +19,7 @@
               href="https://www.creative-tim.com?ref=vn-footer-small"
               class="text-white hover:text-blueGray-300 text-sm font-semibold py-1"
             >
-              Creative Tim
+              Spint
             </a>
           </div>
         </div>

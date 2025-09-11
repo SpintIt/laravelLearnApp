@@ -34,87 +34,40 @@
                             <small>Or sign up with credentials</small>
                         </div>
                         <form @submit.prevent="submitForm">
-                            <div class="relative w-full mb-3">
-                                <label
-                                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlFor="grid-password"
-                                >
-                                    Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    v-model="form.name"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    placeholder="Name"
-                                />
-                            </div>
+                            <Input
+                                :title="t('input.name')"
+                                name="name"
+                                v-model="form.name"
+                                :error="errors.name"
+                            />
 
-                            <div class="relative w-full mb-3">
-                                <label
-                                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlFor="grid-password"
-                                >
-                                    Email
-                                </label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    v-model="form.email"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    placeholder="Email"
-                                />
-                            </div>
+                            <Input
+                                :title="t('input.email')"
+                                name="email"
+                                v-model="form.email"
+                                :error="errors.email"
+                            />
 
-                            <div class="relative w-full mb-3">
-                                <label
-                                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlFor="grid-password"
-                                >
-                                    Password
-                                </label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    v-model="form.password"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    placeholder="Password"
-                                />
-                            </div>
+                            <Input
+                                :title="t('input.password')"
+                                name="password"
+                                v-model="form.password"
+                                :error="errors.password"
+                            />
 
-                            <div class="relative w-full mb-3">
-                                <label
-                                    class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                    htmlFor="grid-password"
-                                >
-                                    Confirme Password
-                                </label>
-                                <input
-                                    type="password"
-                                    name="password_confirmation"
-                                    v-model="form.password_confirmation"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                    placeholder="Password"
-                                />
-                            </div>
+                            <Input
+                                :title="t('input.passwordConfirmation')"
+                                name="password_confirmation"
+                                v-model="form.password_confirmation"
+                                :error="errors.password_confirmation"
+                            />
 
-                            <div>
-                                <label class="inline-flex items-center cursor-pointer">
-                                    <input
-                                        id="customCheckLogin"
-                                        type="checkbox"
-                                        name="agreement"
-                                        v-model="form.agreement"
-                                        class="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                                    />
-                                    <span class="ml-2 text-sm font-semibold text-blueGray-600">
-                    I agree with the
-                    <a href="javascript:void(0)" class="text-emerald-500">
-                      Privacy Policy
-                    </a>
-                  </span>
-                                </label>
-                            </div>
+                            <Checkbox
+                                :title="t('input.agreement')"
+                                name="agreement"
+                                v-model="form.agreement"
+                                :error="errors.agreement"
+                            />
 
                             <div class="text-center mt-6">
                                 <button
@@ -132,11 +85,28 @@
     </div>
 </template>
 <script>
+import { useI18n } from 'vue-i18n'
 import github from "@/assets/img/github.svg";
 import google from "@/assets/img/google.svg";
 import axios from "axios";
 
+import Error from "../../components/Form/Element/Error.vue";
+import Input from "../../components/Form/Element/Input.vue";
+import Checkbox from "../../components/Form/Element/Checkbox.vue";
+
 export default {
+    setup() {
+        const { t, locale } = useI18n({
+            useScope: 'global'
+        })
+
+        return { t, locale }
+    },
+    components: {
+        Checkbox,
+        Error,
+        Input
+    },
     data() {
         return {
             github,
@@ -146,30 +116,33 @@ export default {
                 email: '',
                 password: '',
                 password_confirmation: '',
-                agreement: false
-            }
+                agreement: false,
+            },
+            errors: {
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: '',
+                agreement: '',
+            },
         };
     },
     methods: {
         async submitForm() {
             try {
                 const response = await axios.post('/auth/register', this.form);
-                const { user, token, status } = response.data;
+                const {user, token, status} = response.data;
 
-                if (status === 'ok')
-                {
+                if (status === 'ok') {
                     localStorage.setItem('authToken', token);
                     console.log('Регистрация прошла успешно! Токен сохранён.', user);
-                    window.location.href  = '/admin';
-                }
-                else
-                {
+                    window.location.href = '/admin';
+                } else {
                     console.error('Что-то пошло не так!');
                 }
-
             } catch (error) {
                 if (error.response && error.response.data) {
-                    console.error('Ошибка регистрации:', error.response.data.errors);
+                    this.errors = error.response.data.errors;
                 } else {
                     console.error('Произошла непредвиденная ошибка:', error);
                 }

@@ -111,6 +111,7 @@ return [
         'email' => 'E-mail',
         'password' => 'Пароль',
         'description' => 'Описание',
+        'agreement' => 'Согласие',
     ],
 
 ];
