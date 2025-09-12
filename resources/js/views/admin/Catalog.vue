@@ -1,16 +1,16 @@
 <template>
   <div class="flex flex-wrap">
     <div class="w-full px-4">
-      <CardSettings />
+      <CatalogList />
     </div>
   </div>
 </template>
 <script>
-import CardSettings from "../../components/Cards/CardSettings.vue";
+import CatalogList from "../../components/Catalog/CatalogList.vue";
 
 export default {
   components: {
-    CardSettings,
+      CatalogList,
   },
 };
 </script>
