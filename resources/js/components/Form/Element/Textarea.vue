@@ -1,18 +1,19 @@
 <template>
-    <div class="relative w-full mb-4">
+    <div class="relative w-full mb-3">
         <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" :for="name">
             {{ t(name) }}
         </label>
-        <input
-            :type="type"
+        <textarea
             :id="name"
             :name="name"
-            :value="modelValue"
-            @input="$emit('update:modelValue', String($event.target.value))"
+            @input="$emit('update:modelValue', $event.target.value)"
+            type="textarea"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+            rows="4"
             :placeholder="title"
-            :autocomplete="autocomplete"
-        />
+            autocomplete="on"
+        >{{ modelValue }}</textarea>
+
         <error :message="errorMessage"/>
     </div>
 </template>
@@ -23,12 +24,8 @@ import { computed } from "vue";
 import Error from "./Error.vue";
 
 const prop = defineProps({
-    type: {
-        type: String,
-        default: 'text',
-    },
     modelValue: {
-        type: [String, Number],
+        type: String,
         default: '',
     },
     title: {
@@ -38,10 +35,6 @@ const prop = defineProps({
     name: {
         type: String,
         default: '',
-    },
-    autocomplete: {
-        type: String,
-        default: 'on',
     },
     error: {
         type: [String, Array],
@@ -60,25 +53,10 @@ const errorMessage = computed(() => {
 const { t } = useI18n({
     messages: {
         ru: {
-            name: "Имя",
-            email: "Email",
-            code: "Код",
-            active: "Активность",
-            sort: "Сортировка",
-            price: "Цена",
-            priceDiscount: "Скидочная цена",
-            quantity: "Остаток",
-            password: "Пароль",
-            password_confirmation: "Подтверждение пароля",
+            description: "Описание",
         },
         en: {
-            name: "Name",
-            email: "Email",
-            code: "Code",
-            active: "Active",
-            sort: "Sort",
-            password: "Password",
-            password_confirmation: "Confirme Password",
+            description: "Description",
         }
     }
 })

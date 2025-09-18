@@ -2,15 +2,24 @@ import GridCell from './GridCell.js';
 
 class GridRow
 {
+    /**
+     * @type {Object.<string, GridCell>}
+     */
+    #cellList;
+
+    /**
+     * @param {Object.<string, GridCell>} cellList
+     */
+    constructor(cellList) {
+        this.#cellList = cellList;
+    }
+
+    /**
+     * @returns {Object<string, GridCell>}
+     */
     getData()
     {
-        return {
-            'project': new GridCell('Project'),
-            'budget': new GridCell('Budget'),
-            'status': new GridCell('Status'),
-            'users': new GridCell('Users'),
-            'completion': new GridCell('Completion'),
-        };
+        return this.#cellList;
     }
 }
 

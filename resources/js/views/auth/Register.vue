@@ -59,65 +59,50 @@
         </div>
     </div>
 </template>
-<script>
-import github from "@/assets/img/github.svg";
-import google from "@/assets/img/google.svg";
+
+<script setup>
+import { reactive , ref } from "vue";
 import axios from "axios";
+import {useI18n} from 'vue-i18n'
 
 import Input from "../../components/Form/Element/Input.vue";
 import Checkbox from "../../components/Form/Element/Checkbox.vue";
 
-export default {
-    components: {
-        Checkbox,
-        Input
-    },
-    data() {
-        return {
-            github,
-            google,
-            form: {
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: '',
-                agreement: false,
-            },
-            errors: {
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: '',
-                agreement: '',
-            },
-        };
-    },
-    methods: {
-        async submitForm() {
-            try {
-                const response = await axios.post('/auth/register', this.form);
-                const {user, token, status} = response.data;
+const form = reactive({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    agreement: false,
+});
 
-                if (status === 'ok') {
-                    localStorage.setItem('authToken', token);
-                    window.location.href = '/admin';
-                } else {
-                    console.error(t('error'));
-                }
-            } catch (error) {
-                if (error.response && error.response.data) {
-                    this.errors = error.response.data.errors;
-                } else {
-                    console.error(t('exception'), error);
-                }
-            }
+let errors = ref({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    agreement: '',
+});
+
+const submitForm = async () => {
+    try {
+        const response = await axios.post('/auth/register', form);
+        const {user, token, status} = response.data;
+
+        if (status === 'ok') {
+            localStorage.setItem('authToken', token);
+            window.location.href = '/admin';
+        } else {
+            console.error(t('error'));
+        }
+    } catch (error) {
+        if (error.response && error.response.data) {
+            errors.value = error.response.data.errors;
+        } else {
+            console.error(t('exception'), error);
         }
     }
-};
-</script>
-
-<script setup>
-import {useI18n} from 'vue-i18n'
+}
 
 const {t} = useI18n({
     messages: {

@@ -15,7 +15,7 @@ class LogMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        info('Запрос', [11111]);
+        info('Запрос', [$request->toArray()]);
         return $next($request);
     }
 }

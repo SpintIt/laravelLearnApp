@@ -10,6 +10,6 @@ export default defineConfig({
             refresh: true,
         }),
         tailwindcss(),
-        vue(), // Добавляем плагин в массив
+        vue(),
     ],
 });

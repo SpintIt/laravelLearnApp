@@ -42,15 +42,17 @@ import Maps from "@/views/admin/Maps.vue";
 
 // views for Auth layout
 
-import Login from "@/views/auth/Login.vue";
-import Register from "@/views/auth/Register.vue";
+import Login from "./views/auth/Login.vue";
+import Register from "./views/auth/Register.vue";
 
 // views without layouts
 
 import Landing from "@/views/Landing.vue";
 import Profile from "@/views/Profile.vue";
 import Index from "@/views/Index.vue";
-import Catalog from "./views/admin/Catalog.vue";
+import Catalog from "./views/admin/Catalog/Catalog.vue";
+import CatalogList from "./views/admin/Catalog/CatalogList.vue";
+import ProductCreate from "./views/admin/Catalog/ProductCreate.vue";
 
 // routes
 
@@ -63,6 +65,16 @@ const routes = [
                 path: "catalog",
                 component: Catalog,
                 meta: { hideHeaderStats: true },
+                children: [
+                    {
+                        path: '', // для URL /admin/catalog
+                        component: CatalogList, // Компонент со списком продуктов
+                    },
+                    {
+                        path: 'create', // для URL /admin/catalog/create
+                        component: ProductCreate,
+                    },
+                ]
             },
             {
                 path: "dashboard",
@@ -110,7 +122,7 @@ const routes = [
         path: "/profile",
         component: Profile,
     },
-    { path: "/:pathMatch(.*)*", redirect: "/" },
+    { path: "/:pathMatch(.*)*", redirect: "/admin" },
 ];
 
 const router = createRouter({

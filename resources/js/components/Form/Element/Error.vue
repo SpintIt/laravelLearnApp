@@ -4,17 +4,12 @@
     </div>
 </template>
 
-<script>
-export default {
-    data() {
-        return {
-        };
+<script setup>
+
+defineProps({
+    message: {
+        type: String,
+        default: '',
     },
-    props: {
-        message: {
-            type: String,
-            default: '',
-        },
-    },
-};
+});
 </script>

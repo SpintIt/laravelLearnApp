@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Catalog;
 
+use App\Http\Resources\Catalog\ProductResource;
 use Illuminate\Http\Request;
 use App\Models\Catalog\Product;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        return ProductResource::collection(Product::all());
     }
 
     /**

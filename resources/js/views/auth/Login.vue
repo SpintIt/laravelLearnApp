@@ -53,61 +53,45 @@
         </div>
     </div>
 </template>
-<script>
-import github from "@/assets/img/github.svg";
-import google from "@/assets/img/google.svg";
-import axios from "axios";
+
+<script setup>
+import {useI18n} from 'vue-i18n'
+import { reactive , ref } from 'vue'
 
 import Input from "../../components/Form/Element/Input.vue";
 import Checkbox from "../../components/Form/Element/Checkbox.vue";
 
-export default {
-    components: {
-        Checkbox,
-        Input
-    },
-    data() {
-        return {
-            github,
-            google,
-            form: {
-                name: '',
-                password: '',
-                remember: false,
-            },
-            errors: {
-                name: '',
-                password: '',
-                remember: '',
-            }
-        };
-    },
-    methods: {
-        async submitForm() {
-            try {
-                const response = await axios.post('/auth/login', this.form);
-                const {user, token, status} = response.data;
+const form = reactive({
+    name: '',
+    password: '',
+    remember: false,
+});
 
-                if (status === 'ok') {
-                    localStorage.setItem('authToken', token);
-                    window.location.href = '/admin';
-                } else {
-                    console.error(t('error'));
-                }
-            } catch (error) {
-                if (error.response && error.response.data) {
-                    this.errors = error.response.data.errors;
-                } else {
-                    console.error(t('exception'), error);
-                }
-            }
+let errors = ref({
+    name: '',
+    password: '',
+    remember: '',
+});
+
+const submitForm = async () => {
+    try {
+        const response = await axios.post('/auth/login', form);
+        const {user, token, status} = response.data;
+
+        if (status === 'ok') {
+            localStorage.setItem('authToken', token);
+            window.location.href = '/admin';
+        } else {
+            console.error(t('error'));
+        }
+    } catch (error) {
+        if (error.response && error.response.data) {
+            errors.value = error.response.data.errors;
+        } else {
+            console.error(t('exception'), error);
         }
     }
-};
-</script>
-
-<script setup>
-import {useI18n} from 'vue-i18n'
+}
 
 const {t} = useI18n({
     messages: {

@@ -393,7 +393,10 @@
     </table>
 </template>
 
-<script>
+<script setup>
+import {useI18n} from 'vue-i18n'
+import Grid from "./Models/Grid.js";
+
 import bootstrap from "@/assets/img/bootstrap.jpg";
 import angular from "@/assets/img/angular.jpg";
 import sketch from "@/assets/img/sketch.jpg";
@@ -407,42 +410,18 @@ import team4 from "@/assets/img/team-4-470x470.png";
 
 import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
 import GridHeader from "./GridHeader.vue";
-import Grid from "./Models/Grid.js";
 import GridRowModel from "./Models/GridRow.js";
 
-export default {
-    components: {
-        TableDropdown, GridHeader
+defineProps({
+    grid: {
+        type: Grid,
+        default: null,
     },
-    props: {
-        grid: {
-            type: Grid,
-            default: null,
-        },
-        color: {
-            type: String,
-            default: 'light',
-        },
+    color: {
+        type: String,
+        default: 'light',
     },
-    data() {
-        return {
-            bootstrap,
-            angular,
-            sketch,
-            react,
-            vue,
-            team1,
-            team2,
-            team3,
-            team4,
-        };
-    },
-    methods: {}
-};
-</script>
-
-<script setup>
-import {useI18n} from 'vue-i18n'
+});
 
 const {t} = useI18n({
     messages: {

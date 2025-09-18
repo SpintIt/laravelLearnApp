@@ -15,23 +15,16 @@
         </div>
     </div>
 </template>
-<script>
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
 import AdminNavbar from "../components/Navbars/AdminNavbar.vue";
 import Sidebar from "../components/Sidebar/Sidebar.vue";
 import HeaderStats from "../components/Headers/HeaderStats.vue";
 import FooterAdmin from "../components/Footers/FooterAdmin.vue";
-export default {
-    name: "admin-layout",
-    components: {
-        AdminNavbar,
-        Sidebar,
-        HeaderStats,
-        FooterAdmin,
-    },
-    computed: {
-        showHeaderStats() {
-            return !this.$route.meta.hideHeaderStats;
-        },
-    },
-};
+
+const route = useRoute();
+
+const showHeaderStats = computed(() => !route.meta.hideHeaderStats);
 </script>

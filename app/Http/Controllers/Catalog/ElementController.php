@@ -13,7 +13,7 @@ class ElementController extends Controller
 {
     public function index(string $code): string
     {
-        /*// Шаг 1: Получаем существующий продукт, цвет и размер
+        /*
         $product = Product::query()->first();
         $color = Color::create([
             'name' => 'Черный'
@@ -23,8 +23,6 @@ class ElementController extends Controller
         ]);
 
         if ($product) {
-            // Шаг 2: Создаем новую запись в таблице offers
-            // Это свяжет продукт, цвет и размер в одной строке
             $offer = Offer::create([
                 'name' => 'Черный продукт размера L',
                 'product_id' => $product->id,

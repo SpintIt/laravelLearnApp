@@ -15,6 +15,7 @@
 ## Восстановление пароля
 ## Очереди
 ## Lazy load
+## Logout через form
 
 ## About Laravel
 
