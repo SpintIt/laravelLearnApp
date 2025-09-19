@@ -9,6 +9,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property int $id
  * @property string $name
  * @property int $category_id
+ * @property mixed $active
+ * @property mixed $code
+ * @property mixed $sort
+ * @property mixed $image
+ * @property mixed $description
  */
 class ProductResource extends JsonResource
 {
@@ -21,8 +26,13 @@ class ProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'body' => $this->name,
-            'categoryId' => $this->category_id,
+            'name' => $this->name,
+            'category_id' => $this->category_id,
+            'active' => $this->active,
+            'code' => $this->code,
+            'sort' => $this->sort,
+            'image' => $this->image,
+            'description' => $this->description,
         ];
     }
 }

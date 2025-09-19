@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string('name');
+            $table->string('code', 100);
 
             $table->foreignIdFor(Product::class)
                 ->constrained()

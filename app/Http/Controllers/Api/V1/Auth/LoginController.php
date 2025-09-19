@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
@@ -21,13 +21,11 @@ class LoginController extends Controller
 
     public function store(LoginRequest $request): JsonResponse
     {
-        if (!Auth::attempt($request->validated(), $request->boolean('remember'))) {
+        if (!Auth::attempt($request->validated())) {
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed')
             ]);
         }
-
-        $request->session()->regenerate();
 
         $user = $request->user();
         $token = $user->createToken('auth-token')->plainTextToken;
@@ -47,10 +45,6 @@ class LoginController extends Controller
         if ($user) {
             $user->tokens()->delete();
         }
-
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
 
         return response()->json([
             'status' => 'ok',

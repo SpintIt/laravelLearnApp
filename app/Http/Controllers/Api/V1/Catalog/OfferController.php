@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Catalog;
+namespace App\Http\Controllers\Api\V1\Catalog;
 
-use App\Http\Resources\Catalog\ProductResource;
-use Illuminate\Http\Request;
-use App\Models\Catalog\Product;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Models\Catalog\Offer;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class OfferController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): AnonymousResourceCollection
+    public function index(): Collection
     {
-        return ProductResource::collection(Product::all());
+        return Offer::query()->get();
     }
 
     /**
@@ -23,7 +22,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -37,7 +36,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Offer $offer)
     {
         //
     }
@@ -45,7 +44,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Offer $offer)
     {
         //
     }
@@ -53,7 +52,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Offer $offer)
     {
         //
     }
@@ -61,7 +60,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Offer $offer)
     {
         //
     }

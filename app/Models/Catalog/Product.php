@@ -10,6 +10,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
+    protected $fillable = [
+        'name',
+        'category_id',
+        'active',
+        'code',
+        'sort',
+        'image',
+        'description',
+    ];
+
     public function offers(): HasMany
     {
         return $this->hasMany(Offer::class);

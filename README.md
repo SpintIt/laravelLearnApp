@@ -16,6 +16,7 @@
 ## Очереди
 ## Lazy load
 ## Logout через form
+## Seeds and faker
 
 ## About Laravel
 
