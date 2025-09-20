@@ -1,12 +1,11 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Http\Middleware\LogMiddleware;
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\ConvertStringBooleans;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,6 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             LogMiddleware::class,
         ])->alias(['log' => LogMiddleware::class]);
+
+        $middleware->api(append: [
+            ConvertStringBooleans::class,
+        ]);
+
         $middleware->redirectUsersTo(fn(Request $request) => route('admin.index'));
         $middleware->redirectGuestsTo(fn(Request $request) => route('auth.login'));
     })

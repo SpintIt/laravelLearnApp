@@ -1,8 +1,12 @@
 import GridRow from './GridRow.js'
 import GridCell from "./GridCell.js";
 
-class Grid
-{
+class Grid {
+    /**
+     * @type {Array<Object>} data
+     */
+    #data;
+
     /**
      * @type {GridRow}
      */
@@ -13,22 +17,61 @@ class Grid
      */
     #rows;
 
-    constructor() {
-        this.#headerRow = new GridRow({
-            'project': new GridCell('Project'),
-            'budget': new GridCell('Budget'),
-            'status': new GridCell('Status'),
-            'users': new GridCell('Users'),
-            'completion': new GridCell('Completion'),
+    /**
+     * @param {Array<Object>} data
+     */
+    constructor(data) {
+        this.#data = data;
+
+        this.#createHeader();
+        this.#createRows();
+    }
+
+    #createHeader() {
+        if (!this.#data || this.#data.length === 0) {
+            this.#headerRow = new GridRow({});
+            return;
+        }
+
+        const firstItem = this.#data[0];
+        const headerCells = {};
+        for (const key in firstItem) {
+            if (Object.prototype.hasOwnProperty.call(firstItem, key)) {
+                headerCells[key] = new GridCell(key);
+            }
+        }
+        this.#headerRow = new GridRow(headerCells);
+    }
+
+    #createRows() {
+        if (!this.#data || this.#data.length === 0) {
+            this.#rows = [];
+            return;
+        }
+
+        this.#rows = this.#data.map(item => {
+            const rowCells = {};
+            for (const key in item) {
+                if (Object.prototype.hasOwnProperty.call(item, key)) {
+                    rowCells[key] = new GridCell(item[key]);
+                }
+            }
+            return new GridRow(rowCells);
         });
     }
 
     /**
      * @returns {GridRow}
      */
-    getHeader()
-    {
+    getHeader() {
         return this.#headerRow;
+    }
+
+    /**
+     * @returns {GridRow[]}
+     */
+    getRows() {
+        return this.#rows;
     }
 }
 

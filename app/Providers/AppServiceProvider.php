@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
-use App\Services\Notification\INotificationService;
-use App\Services\Notification\NotificationService;
 use Illuminate\Support\ServiceProvider;
+use App\Services\Notification\NotificationService;
+use App\Services\ImageStorage\IImageStorageService;
+use App\Services\Notification\INotificationService;
+use App\Services\ImageStorage\ImageStorageDiskService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(INotificationService::class, NotificationService::class);
+        $this->app->bind(IImageStorageService::class, ImageStorageDiskService::class);
     }
 
     /**

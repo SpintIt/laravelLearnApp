@@ -30,7 +30,7 @@ return new class extends Migration
             $table->dropColumn('quantity');
             $table->dropColumn('price');
             $table->dropColumn('price_discount');
-            $table->dropColumn('image_path');
+            $table->dropColumn('image');
         });
     }
 };

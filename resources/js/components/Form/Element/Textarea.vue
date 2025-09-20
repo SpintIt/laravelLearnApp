@@ -6,13 +6,14 @@
         <textarea
             :id="name"
             :name="name"
+            :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"
             type="textarea"
             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
             rows="4"
             :placeholder="title"
             autocomplete="on"
-        >{{ modelValue }}</textarea>
+        ></textarea>
 
         <error :message="errorMessage"/>
     </div>

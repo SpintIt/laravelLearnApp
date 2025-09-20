@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id'],
+            'category_id' => ['nullable', 'exists:categories,id'],
             'active' => ['nullable', 'boolean'],
             'code' => ['nullable', 'string', 'max:100'],
             'sort' => ['nullable', 'integer', 'min:1'],
