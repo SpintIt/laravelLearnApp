@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Api\V1\Catalog;
 
 use App\Models\Catalog\Product;
 use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManager;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Drivers\Gd\Driver;
 use App\Http\Requests\Catalog\ProductRequest;
 use App\Http\Resources\Catalog\ProductResource;
 use App\Services\ImageStorage\IImageStorageService;
@@ -33,7 +30,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('image'))
         {
-            $filePath = $this->imageStorageService->store($request->file('image'));
+            $filePath = $this->imageStorageService->save($request->file('image'));
             $validatedData['image'] = $filePath;
         }
 

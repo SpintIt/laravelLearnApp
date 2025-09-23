@@ -13,6 +13,6 @@
 @endsection
 
 @section('sidebar.content')
-    <x-catalog.list/>
+    <x-catalog.catalog-list/>
     <x-pagination/>
 @endsection

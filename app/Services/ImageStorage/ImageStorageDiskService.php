@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\ImageStorage;
 
+use Illuminate\Http\UploadedFile;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -20,11 +21,11 @@ final class ImageStorageDiskService implements IImageStorageService
     }
 
     /**
-     * @param \Illuminate\Http\UploadedFile $image
-     * @throws \Symfony\Component\HttpFoundation\File\Exception\FileException
+     * @param UploadedFile $image
+     * @throws FileException
      * @return string $filePath
      */
-    public function store(\Illuminate\Http\UploadedFile $image): string
+    public function save(UploadedFile $image): string
     {
         $this->image = $this->imageManager->read($image);
         $fileName = $this->createName($image);
@@ -35,15 +36,15 @@ final class ImageStorageDiskService implements IImageStorageService
             throw new FileException($pathFile);
         }
 
-        return $pathFile;
+        return "storage/{$pathFile}";
     }
 
-    public function delete(mixed $image)
+    public function load(string $path)
     {
 
     }
 
-    public function get(string $path)
+    public function delete(mixed $image)
     {
 
     }
@@ -53,7 +54,7 @@ final class ImageStorageDiskService implements IImageStorageService
 
     }
 
-    public function createName(\Illuminate\Http\UploadedFile $image): string
+    public function createName(UploadedFile $image): string
     {
         return time() . '.' . $image->getClientOriginalExtension();
     }

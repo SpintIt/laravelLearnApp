@@ -9,6 +9,7 @@
 
 ## For us
 ### php artisan route:cache
+### php artisan storage:link `создаст символическую ссылку из public/storage на storage/app/public`
 
 # TODO List
 ## Добавить согласие с обработкой в отдельную таблицу и заполнять её при регистрации и при отправке формы возможно

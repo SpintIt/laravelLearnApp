@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property mixed $colors
  * @property mixed $sizes
+ * @property float $price
  */
 class Offer extends Model
 {
