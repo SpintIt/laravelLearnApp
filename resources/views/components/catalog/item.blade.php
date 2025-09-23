@@ -6,7 +6,7 @@
         <div>
             <h3 class="font-semibold text-lg mb-2">
                 <a href="{{ route('catalog.page', ['code' => $product->code ?? 'catalog/']) }}" class="hover:text-blue-600 transition-colors duration-200">
-                    {{ $product->name }}
+                   {{ $product->id }} : {{ $product->name }}
                 </a>
             </h3>
             <div class="flex items-baseline mb-4">

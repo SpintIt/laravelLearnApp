@@ -14,5 +14,4 @@
 
 @section('sidebar.content')
     <x-catalog.catalog-list/>
-    <x-pagination/>
 @endsection
